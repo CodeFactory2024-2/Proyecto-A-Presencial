@@ -1,50 +1,48 @@
 package com.udea.vueloudea.controller;
 
+import com.udea.vueloudea.model.Role;
+import com.udea.vueloudea.service.RoleService;
 import com.udea.vueloudea.service.UserService;
 import com.udea.vueloudea.model.UserF;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:5432")
-public class UserController {
-    @Autowired
-    private UserService userService;
+@Controller
+public class UserController{
 
-    @GetMapping("/")
-    public String healthCheck(){
-        return "PROYECTO ACTIVO.-...";
-    }
+    private final UserService userService;
+    private final RoleService roleService;
 
-    @GetMapping("/searchAll")
+    public UserController(UserService userService, RoleService roleService) {this.userService = userService;
+    this.roleService = roleService;}
+
+
+    @QueryMapping
     public List<UserF> searchUsers(){
         return userService.findUsers();
     }
 
-    @GetMapping("/search")
-    public Optional<UserF> searchUser(@RequestParam (value = "id_user", required = true)long id_user) {
-        return userService.findUserById(id_user);
+    @QueryMapping
+    private UserF searchUser(@Argument Long user_id ){
+        return userService.findUserById(user_id);
     }
 
-    @PostMapping("/create")
-    public UserF createUser(@RequestParam (value = "id_user")int id_user,
-                            @RequestParam (value = "name")String name,
-                            @RequestParam (value = "email")String email,
-                            @RequestParam (value = "password")String password,
-                            @RequestParam (value = "address")String address,
-                            @RequestParam (value = "document_number")String document_number,
-                            @RequestParam (value = "role")String role) {
+    @MutationMapping
+    public UserF createUser(
+                            @Argument String name,
+                            @Argument String email,
+                            @Argument String password,
+                            @Argument String address,
+                            @Argument String document_number,
+                            @Argument Long role_id) {
 
-        UserF user = new UserF(id_user, name, email, password, address, document_number, role);
-
-        userService.createUser(user);
-        return  user;
+        Role role =roleService.findRoleById(role_id).orElseThrow(()-> new IllegalArgumentException("Role not found"));
+        return userService.createUser(name, email, password, address, document_number, role);
     }
-
-
-
 }

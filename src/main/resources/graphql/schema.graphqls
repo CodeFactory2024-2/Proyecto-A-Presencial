@@ -1,0 +1,23 @@
+type UserF{
+    id_user: ID!
+    name : String!
+    email: String!
+    password: String!
+    address: String!
+    document_number:  String!
+    role: Role!
+}
+
+type Role{
+    id_role : ID!
+    role: String!
+}
+
+type Query{
+    searchUsers:[UserF]
+    searchUser(id_role: ID!): UserF
+}
+
+type Mutation{
+    createUser( name: String, email:String, password:String, address:String, document_number: String, role_id:ID): UserF
+}
