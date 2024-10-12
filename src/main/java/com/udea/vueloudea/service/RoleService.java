@@ -10,11 +10,11 @@ import java.util.Optional;
 
 @Service
 public class RoleService {
+
     @Autowired
     private RoleRepository roleRepository;
 
     public List<Role> findRoles() {
-
         return roleRepository.findAll();
     }
 
@@ -24,6 +24,6 @@ public class RoleService {
 
     public void createRole(Role role) {
         roleRepository.save(role);
-
     }
 }
+

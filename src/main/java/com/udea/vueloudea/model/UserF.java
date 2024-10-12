@@ -1,14 +1,5 @@
 package com.udea.vueloudea.model;
-
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -21,15 +12,16 @@ public class UserF {
     private String email;
     private String password;
     private String address;
-    private String role;
     private String document_number;
 
-
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     public UserF() {
     }
 
-    public UserF(long id_user, String name, String email, String password, String address, String document_number, String role) {
+    public UserF(long id_user, String name, String email, String password, String address, String document_number, Role role) {
         this.id_user = id_user;
         this.name = name;
         this.email = email;
@@ -39,11 +31,13 @@ public class UserF {
         this.role = role;
     }
 
+   
+
     public long getId_user() {
         return id_user;
     }
 
-    public void setId_user(int id_user) {
+    public void setId_user(long id_user) {
         this.id_user = id_user;
     }
 
@@ -71,14 +65,6 @@ public class UserF {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -95,13 +81,19 @@ public class UserF {
         this.document_number = document_number;
     }
 
+    public Role getRole() {
+        return role;
+    }
 
-    //IDIOMS
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if(!(o instanceof UserF user )) return false;
+        if (!(o instanceof UserF user)) return false;
 
         return Objects.equals(getId_user(), user.getId_user());
     }

@@ -19,12 +19,15 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_role;
     private String role;
+
     public Role() {}
 
-    public Role(long id_role,String role ) {
-        this.role = role;
+    public Role(long id_role, String role) {
         this.id_role = id_role;
+        this.role = role;
     }
+
+    // Getters y Setters
 
     public long getId_role() {
         return id_role;
@@ -42,12 +45,12 @@ public class Role implements Serializable {
         this.role = role;
     }
 
-    //IDIOMS
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if(!(o instanceof Role role )) return false;
+        if (!(o instanceof Role role)) return false;
 
         return Objects.equals(getId_role(), role.getId_role());
     }
@@ -57,4 +60,3 @@ public class Role implements Serializable {
         return Objects.hash(getId_role());
     }
 }
-
