@@ -16,7 +16,11 @@ import java.util.Optional;
 public class RoleController {
 
 
-    private RoleService roleService;
+    private final RoleService roleService;
+
+    public RoleController(RoleService roleService) {
+        this.roleService = roleService;
+    }
 
     @QueryMapping
     public List<Role> searchRoles(){
@@ -24,14 +28,12 @@ public class RoleController {
     }
 
     @QueryMapping
-    public Optional<Role> searchRolesById(@RequestParam (value = "id_role", required = true)long id_role){
+    public Optional<Role> searchRolesById(@Argument long id_role){
         return roleService.findRoleById(id_role);
     }
 
     @MutationMapping
-    public Role createRole(@Argument long id_role,@Argument String role){
-        Role newrole = new Role(id_role, role);
-        roleService.createRole(newrole);
-        return newrole;
+    public Role createRole(@Argument String role){
+        return roleService.createRole(role);
     }
 }

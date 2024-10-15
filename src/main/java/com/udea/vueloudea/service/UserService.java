@@ -22,8 +22,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public UserF findUserById(long id_user) {
-        return userRepository.findById(id_user).orElseThrow(() -> new IllegalArgumentException("User not found"));
+    public UserF searchUsersById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
         }
 
     public UserF createUser( @Argument String name, @Argument String email, @Argument String password,

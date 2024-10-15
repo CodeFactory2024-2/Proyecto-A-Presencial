@@ -29,8 +29,8 @@ public class UserController{
     }
 
     @QueryMapping
-    private UserF searchUser(@Argument Long user_id ){
-        return userService.findUserById(user_id);
+    private UserF searchUserById(@Argument long id ){
+        return userService.searchUsersById(id);
     }
 
     @MutationMapping

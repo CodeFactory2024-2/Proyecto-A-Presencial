@@ -11,14 +11,17 @@ type UserF{
 type Role{
     id_role : ID!
     role: String!
+    user_fs: [UserF!]!
 }
 
 type Query{
     searchUsers:[UserF]
-    searchUser(id_role: ID!): UserF
+    searchUserById(id_user: ID!): UserF
+    searchRoles: [Role]
+    searchRolesById(id_role: ID!): Role
 }
-
 
 type Mutation{
     createUser( name: String, email:String, password:String, address:String, document_number: String, role_id:ID): UserF
+    createRole( role: String ): Role
 }
