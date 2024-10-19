@@ -18,7 +18,6 @@ type Query{
     searchUser(id_role: ID!): UserF
 }
 
-
 type Mutation{
     createUser( name: String, email:String, password:String, address:String, document_number: String, role_id:ID): UserF
 }

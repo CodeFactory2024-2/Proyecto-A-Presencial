@@ -90,13 +90,7 @@ public class UserF {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserF user)) return false;
 
-        return Objects.equals(getId_user(), user.getId_user());
-    }
 
     @Override
     public int hashCode() {

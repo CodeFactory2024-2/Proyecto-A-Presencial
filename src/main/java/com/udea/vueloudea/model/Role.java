@@ -47,13 +47,7 @@ public class Role implements Serializable {
 
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Role role)) return false;
 
-        return Objects.equals(getId_role(), role.getId_role());
-    }
 
     @Override
     public int hashCode() {
