@@ -30,47 +30,46 @@ class UserServiceTest {
 
     @Test
     void findUsers_shouldReturnAllUsers() {
-        // Arrange
+
         List<UserF> expectedUsers = Arrays.asList(new UserF(), new UserF());
         when(userRepository.findAll()).thenReturn(expectedUsers);
 
-        // Act
+
         List<UserF> actualUsers = userService.findUsers();
 
-        // Assert
         assertEquals(expectedUsers, actualUsers);
         verify(userRepository).findAll();
     }
 
     @Test
     void findUserById_shouldReturnUser_whenUserExists() {
-        // Arrange
+
         long userId = 1L;
         UserF expectedUser = new UserF();
         when(userRepository.findById(userId)).thenReturn(Optional.of(expectedUser));
 
-        // Act
+
         UserF actualUser = userService.findUserById(userId);
 
-        // Assert
+
         assertEquals(expectedUser, actualUser);
         verify(userRepository).findById(userId);
     }
 
     @Test
     void findUserById_shouldThrowException_whenUserNotFound() {
-        // Arrange
+
         long userId = 1L;
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
-        // Act & Assert
+
         assertThrows(IllegalArgumentException.class, () -> userService.findUserById(userId));
         verify(userRepository).findById(userId);
     }
 
     @Test
     void createUser_shouldSaveAndReturnUser() {
-        // Arrange
+
         String name = "John Doe";
         String email = "john@example.com";
         String password = "password123";
@@ -88,14 +87,14 @@ class UserServiceTest {
 
         when(userRepository.save(any(UserF.class))).thenReturn(expectedUser);
 
-        // Act
+
         UserF actualUser = userService.createUser(name, email, password, address, documentNumber, role);
 
-        // Assert
+
         assertEquals(expectedUser, actualUser);
         verify(userRepository).save(any(UserF.class));
 
-        // Verificaciones adicionales
+
         assertEquals(name, actualUser.getName());
         assertEquals(email, actualUser.getEmail());
         assertEquals(password, actualUser.getPassword());
