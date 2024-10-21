@@ -90,10 +90,8 @@ class UserServiceTest {
 
         UserF actualUser = userService.createUser(name, email, password, address, documentNumber, role);
 
-
         assertEquals(expectedUser, actualUser);
         verify(userRepository).save(any(UserF.class));
-
 
         assertEquals(name, actualUser.getName());
         assertEquals(email, actualUser.getEmail());

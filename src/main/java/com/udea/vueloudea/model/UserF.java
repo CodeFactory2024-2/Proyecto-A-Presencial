@@ -1,5 +1,5 @@
 package com.udea.vueloudea.model;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
