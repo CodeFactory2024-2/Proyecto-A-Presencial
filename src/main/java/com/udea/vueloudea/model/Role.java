@@ -1,56 +1,27 @@
 package com.udea.vueloudea.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import lombok.*;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-
-
-//comentario  para probar que funciona el sonarcloud
+import java.util.List;
 
 @Entity
-public class Role implements Serializable {
+@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Role{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_role;
     private String role;
 
-    public Role() {}
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private List<User> users;
 
-    public Role(long id_role, String role) {
-        this.id_role = id_role;
+    public Role(String role) {
         this.role = role;
-    }
-
-    // Getters y Setters
-
-    public long getId_role() {
-        return id_role;
-    }
-
-    public void setId_role(long id_role) {
-        this.id_role = id_role;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-
-
-
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId_role());
     }
 }

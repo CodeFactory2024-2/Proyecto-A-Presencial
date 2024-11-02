@@ -1,7 +1,7 @@
 package com.udea.vueloudea.controller;
 
 import com.udea.vueloudea.model.Role;
-import com.udea.vueloudea.model.UserF;
+import com.udea.vueloudea.model.User;
 import com.udea.vueloudea.repository.UserRepository;
 import com.udea.vueloudea.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,11 +31,11 @@ class UserServiceTest {
     @Test
     void findUsers_shouldReturnAllUsers() {
 
-        List<UserF> expectedUsers = Arrays.asList(new UserF(), new UserF());
+        List<User> expectedUsers = Arrays.asList(new User(), new User());
         when(userRepository.findAll()).thenReturn(expectedUsers);
 
 
-        List<UserF> actualUsers = userService.findUsers();
+        List<User> actualUsers = userService.findUsers();
 
         assertEquals(expectedUsers, actualUsers);
         verify(userRepository).findAll();
@@ -45,11 +45,11 @@ class UserServiceTest {
     void findUserById_shouldReturnUser_whenUserExists() {
 
         long userId = 1L;
-        UserF expectedUser = new UserF();
+        User expectedUser = new User();
         when(userRepository.findById(userId)).thenReturn(Optional.of(expectedUser));
 
 
-        UserF actualUser = userService.findUserById(userId);
+        User actualUser = userService.findUserById(userId);
 
 
         assertEquals(expectedUser, actualUser);
@@ -75,9 +75,9 @@ class UserServiceTest {
         String password = "password123";
         String address = "123 Main St";
         String documentNumber = "123456789";
-        Role role = new Role(1L, "USER");
+        Role role = new Role("USER");
 
-        UserF expectedUser = new UserF();
+        User expectedUser = new User();
         expectedUser.setName(name);
         expectedUser.setEmail(email);
         expectedUser.setPassword(password);
@@ -85,13 +85,13 @@ class UserServiceTest {
         expectedUser.setDocument_number(documentNumber);
         expectedUser.setRole(role);
 
-        when(userRepository.save(any(UserF.class))).thenReturn(expectedUser);
+        when(userRepository.save(any(User.class))).thenReturn(expectedUser);
 
 
-        UserF actualUser = userService.createUser(name, email, password, address, documentNumber, role);
+        User actualUser = userService.createUser(name, email, password, address, documentNumber, role);
 
         assertEquals(expectedUser, actualUser);
-        verify(userRepository).save(any(UserF.class));
+        verify(userRepository).save(any(User.class));
 
         assertEquals(name, actualUser.getName());
         assertEquals(email, actualUser.getEmail());

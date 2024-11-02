@@ -22,8 +22,9 @@ public class RoleService {
         return roleRepository.findById(id_role);
     }
 
-    public void createRole(Role role) {
-        roleRepository.save(role);
+    public Role createRole(String role) {
+        Role newRole = new Role(role);
+        return roleRepository.save(newRole);
     }
 }
 

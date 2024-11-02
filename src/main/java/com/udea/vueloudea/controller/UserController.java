@@ -3,7 +3,7 @@ package com.udea.vueloudea.controller;
 import com.udea.vueloudea.model.Role;
 import com.udea.vueloudea.service.RoleService;
 import com.udea.vueloudea.service.UserService;
-import com.udea.vueloudea.model.UserF;
+import com.udea.vueloudea.model.User;
 
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -11,7 +11,6 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class UserController{
@@ -24,17 +23,19 @@ public class UserController{
 
 
     @QueryMapping
-    public List<UserF> searchUsers(){
+    public List<User> searchUsers(){
         return userService.findUsers();
     }
 
     @QueryMapping
-    private UserF searchUser(@Argument Long user_id ){
-        return userService.findUserById(user_id);
+    public User searchUser(@Argument Long id_user) {
+        return userService.findUserById(id_user);
     }
 
+
+
     @MutationMapping
-    public UserF createUser(
+    public User createUser(
                             @Argument String name,
                             @Argument String email,
                             @Argument String password,
