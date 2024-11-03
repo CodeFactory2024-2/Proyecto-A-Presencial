@@ -13,6 +13,11 @@ type Role{
     role: String!
 }
 
+type AuthResponse {
+    token: String
+    message: String
+}
+
 type Query{
     searchUsers:[User]
     searchUser(id_user: ID!): User
@@ -25,4 +30,6 @@ type Query{
 type Mutation{
     createUser( name: String, email:String, password:String, address:String, document_number: String, role_id:ID): User
     createRole( role: String ): Role
+    authenticate(email: String!, password: String!): AuthResponse
+    register( name: String, email: String, password: String): AuthResponse
 }

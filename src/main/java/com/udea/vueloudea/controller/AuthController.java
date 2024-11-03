@@ -1,18 +1,23 @@
 package com.udea.vueloudea.controller;
-
 import com.udea.vueloudea.model.AuthRequest;
+import com.udea.vueloudea.model.AuthResponse;
+import com.udea.vueloudea.model.RegisterRequest;
 import com.udea.vueloudea.security.JWTutil;
-import com.udea.vueloudea.service.UserService;
+import com.udea.vueloudea.service.AuthService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
 
-@RestController
+
+@Controller
+@AllArgsConstructor
 public class AuthController {
 
     @Autowired
@@ -21,22 +26,27 @@ public class AuthController {
     @Autowired
     private JWTutil jwtUtil;
 
-
     @Autowired
     private UserDetailsService userDetailsService;
 
-
-    @PostMapping("/authenticate")
-    public String createAuthenticationToken(@RequestBody AuthRequest authRequest) throws Exception {
+    @MutationMapping
+    public AuthResponse register(@Argument String name,@Argument String email, @Argument String  password){
         try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-        } catch (AuthenticationException e) {
-            throw new Exception("Incorrect username or password", e);
+            RegisterRequest request = new RegisterRequest(name, email, password);
+            return authService.register(request);
+        }catch (Exception e){
+            return new AuthResponse(null, "Error al registrar el usuario");
         }
+    }
 
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
-        return jwtUtil.generateToken(userDetails.getUsername());
+    @MutationMapping
+    public AuthResponse authenticate(@Argument String email, @Argument String  password) {
+        try {
+            return authService.authenticate(email, password);
+        } catch (Exception e) {
+            // Devuelve un AuthResponse con mensaje de error en lugar de null
+            return new AuthResponse(null, "Error de autenticación");
+        }
     }
 }
 

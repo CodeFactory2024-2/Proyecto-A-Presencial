@@ -35,8 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers( "/graphiql", "/authenticate").permitAll() // Permitir acceso sin autenticación al endpoint de autenticación
-                .anyRequest().authenticated()
+                .antMatchers( "/graphiql").permitAll()
+                .anyRequest().permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
