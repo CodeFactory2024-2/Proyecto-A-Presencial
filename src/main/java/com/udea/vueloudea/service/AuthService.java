@@ -1,6 +1,6 @@
 package com.udea.vueloudea.service;
 
-import com.udea.vueloudea.model.User;
+import com.udea.vueloudea.model.*;
 import com.udea.vueloudea.repository.UserRepository;
 import com.udea.vueloudea.security.JWTutil;
 import lombok.AllArgsConstructor;
@@ -9,9 +9,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class AuthService {
 
     private final UserRepository userRepository;
@@ -22,18 +22,26 @@ public class AuthService {
 
 
 
-    public Optional<User> login(String email, String password) {
-        Optional<User> userOptional = userRepository.findByEmail(email);
+    public AuthResponse register(RegisterRequest request){
+        var user = User.builder()
+                .name(request.getName())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(new Role(2L, "USER"))
+                .build();
+        userRepository.save(user);
+        var jwtToken = JWTutil.generateToken(user);
+        return AuthResponse.builder().token(jwtToken).build();
+    }
 
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-
-
-            if (passwordEncoder.matches(password, user.getPassword())) {
-                return Optional.of(user);
-            }
-        }
-
-        return Optional.empty();
+    public AuthResponse authenticate(String email, String password){
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        email, password
+                )
+        );
+        var user = userRepository.findByEmail(email).orElseThrow();
+        var jwtToken = jWTutil.generateToken(user);
+        return AuthResponse.builder().token(jwtToken).message("El token se creó correctamente.").build();
     }
 }

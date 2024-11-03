@@ -23,6 +23,8 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    private final AuthService authService;
+
     @Autowired
     private JWTutil jwtUtil;
 

@@ -1,5 +1,6 @@
 package com.udea.vueloudea.security;
 
+import com.udea.vueloudea.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,9 +13,9 @@ public class JWTutil {
 
     private static final String SECRET_KEY = "2af011164ef5f97e5d0b528bc670cbb695126693c30f89e68df359ebaf695024";
 
-    public String generateToken(String username) {
+    public static String generateToken(User user) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(user.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // Token válido por 10 horas
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)

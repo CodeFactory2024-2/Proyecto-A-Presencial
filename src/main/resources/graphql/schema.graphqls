@@ -23,9 +23,7 @@ type Query{
     searchUser(id_user: ID!): User
     searchRoles: [Role]
     searchRolesById(id_role: ID!): Role
-    login(email: String!, password: String!): String
 }
-
 
 type Mutation{
     createUser( name: String, email:String, password:String, address:String, document_number: String, role_id:ID): User
