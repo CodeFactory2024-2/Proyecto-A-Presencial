@@ -46,7 +46,7 @@ public class AuthController {
         try {
             return authService.authenticate(email, password);
         } catch (Exception e) {
-            // Devuelve un AuthResponse con mensaje de error en lugar de null
+
             return new AuthResponse(null, "Error de autenticación");
         }
     }
