@@ -1,34 +1,13 @@
-
-name: AUTH-A
+name: auth-a
 services:
-  vueloudea:
-    build: .
-    ports:
-      - "8080:8080"
-    environment:
-#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_container:5432/Auth
-#      SPRING_DATASOURCE_USERNAME: postgres
-#      SPRING_DATASOURCE_PASSWORD: 1234
-#      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
-      JWT_SECRET: "Cualquiercosa"
-
   springboot-app:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8001:8001"
+    - "8001:8001" #puerto correspondiente
     networks:
-      - my_bridge_network
+    - my_bridge_network
 networks:
   my_bridge_network:
     external: true
-
-
-
-
-
-
-
-volumes:
-  postgres-data:
