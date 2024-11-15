@@ -15,7 +15,6 @@ import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
-@NoArgsConstructor
 
 public class RoleController {
 
