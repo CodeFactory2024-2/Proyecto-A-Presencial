@@ -7,6 +7,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +18,11 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final BCryptPasswordEncoder passwordEncoder;
+
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     public List<User> findUsers() {
@@ -36,11 +40,41 @@ public class UserService {
         User user = new User();
         user.setName(name);
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         user.setAddress(address);
         user.setDocument_number(document_number);
         user.setRole(role);
         return userRepository.save(user);
+    }
+
+    public void deleteUser(long id_user) {
+        userRepository.deleteById(id_user);
+    }
+
+    public User updateUser(@Argument String name,
+                           @Argument String email,
+                           @Argument String password,
+                           @Argument String address,
+                           @Argument String document_number){
+
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        if (!name.isEmpty()){
+            user.setName(name);
+        }
+        if (!email.isEmpty()){
+            user.setEmail(email);
+        }
+        if (!password.isEmpty()){
+            user.setPassword(passwordEncoder.encode(password));
+        }
+        if (!address.isEmpty()){
+            user.setAddress(address);
+        }
+        if (!document_number.isEmpty()){
+            user.setDocument_number(document_number);
+        }
+        return userRepository.save(user);
+
     }
 
 }

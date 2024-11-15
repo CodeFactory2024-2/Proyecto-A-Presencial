@@ -30,4 +30,6 @@ type Mutation{
     createRole( role: String ): Role
     authenticate(email: String!, password: String!): AuthResponse
     register( name: String, email: String, password: String): AuthResponse
+    deleteUser(id_user: ID!): User
+    updateUser(name: String!, email: String!, password: String!, address: String, document_number: String): User
 }

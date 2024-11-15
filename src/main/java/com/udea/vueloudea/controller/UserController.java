@@ -48,4 +48,23 @@ public class UserController{
         Role role =roleService.findRoleById(role_id).orElseThrow(()-> new IllegalArgumentException("Role not found"));
         return userService.createUser(name, email, password, address, document_number, role);
     }
+
+    @MutationMapping
+    public User deleteUser(
+            @Argument Long id_user
+    ){
+        User user = userService.findUserById(id_user);
+        userService.deleteUser(id_user);
+        return user;
+    }
+
+    @MutationMapping
+    public  User updateUser(@Argument String name,
+                            @Argument String email,
+                            @Argument String password,
+                            @Argument String address,
+                            @Argument String document_number){
+
+        return userService.updateUser(name, email, password, address, document_number);
+    }
 }
