@@ -58,19 +58,16 @@ public class UserService {
                            @Argument String document_number){
 
         User user = userRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        if (!name.isEmpty()){
+        if (name != null){
             user.setName(name);
         }
-        if (!email.isEmpty()){
-            user.setEmail(email);
-        }
-        if (!password.isEmpty()){
+        if (password != null){
             user.setPassword(passwordEncoder.encode(password));
         }
-        if (!address.isEmpty()){
+        if (address != null){
             user.setAddress(address);
         }
-        if (!document_number.isEmpty()){
+        if (document_number != null){
             user.setDocument_number(document_number);
         }
         return userRepository.save(user);
