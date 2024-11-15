@@ -1,0 +1,33 @@
+type User{
+    id_user: ID!
+    name : String!
+    email: String!
+    password: String!
+    address: String
+    document_number:  String
+    role: Role!
+}
+
+type Role{
+    id_role : ID!
+    role: String!
+}
+
+type AuthResponse {
+    token: String
+    message: String
+}
+
+type Query{
+    searchUsers:[User]
+    searchUser(id_user: ID!): User
+    searchRoles: [Role]
+    searchRolesById(id_role: ID!): Role
+}
+
+type Mutation{
+    createUser( name: String, email:String, password:String, address:String, document_number: String, role_id:ID): User
+    createRole( role: String ): Role
+    authenticate(email: String!, password: String!): AuthResponse
+    register( name: String, email: String, password: String): AuthResponse
+}
