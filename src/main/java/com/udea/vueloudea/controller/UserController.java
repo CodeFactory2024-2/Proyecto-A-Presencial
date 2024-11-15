@@ -5,6 +5,7 @@ import com.udea.vueloudea.service.RoleService;
 import com.udea.vueloudea.service.UserService;
 import com.udea.vueloudea.model.User;
 
+import lombok.AllArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 
 @Controller
+
 public class UserController{
 
     private final UserService userService;

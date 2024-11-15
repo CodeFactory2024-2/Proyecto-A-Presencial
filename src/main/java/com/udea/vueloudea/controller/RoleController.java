@@ -2,16 +2,20 @@ package com.udea.vueloudea.controller;
 
 import com.udea.vueloudea.model.Role;
 import com.udea.vueloudea.service.RoleService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 import java.util.Optional;
 
 @Controller
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class RoleController {
 
