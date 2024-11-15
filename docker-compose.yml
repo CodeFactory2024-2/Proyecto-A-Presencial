@@ -5,9 +5,6 @@ services:
     build: .
     ports:
       - "8080:8080"
-    depends_on:
-      postgres:
-        condition: service_healthy
     environment:
 #      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_container:5432/Auth
 #      SPRING_DATASOURCE_USERNAME: postgres
