@@ -71,7 +71,6 @@ public class UserService {
             user.setDocument_number(document_number);
         }
         return userRepository.save(user);
-
     }
 
 }

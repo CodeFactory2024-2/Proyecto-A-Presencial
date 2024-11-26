@@ -15,6 +15,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 
 @Controller
 @AllArgsConstructor
@@ -37,7 +39,8 @@ public class AuthController {
             RegisterRequest request = new RegisterRequest(name, email, password);
             return authService.register(request);
         }catch (Exception e){
-            return new AuthResponse(null, "Error al registrar el usuario");
+
+            return new AuthResponse(null, "error en el registro");
         }
     }
 
@@ -47,7 +50,7 @@ public class AuthController {
             return authService.authenticate(email, password);
         } catch (Exception e) {
 
-            return new AuthResponse(null, "Error de autenticación");
+            return new AuthResponse(null, "Error de autenticación" );
         }
     }
 }

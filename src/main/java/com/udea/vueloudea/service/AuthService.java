@@ -31,7 +31,7 @@ public class AuthService {
                 .build();
         userRepository.save(user);
         var jwtToken = JWTutil.generateToken(user);
-        return AuthResponse.builder().token(jwtToken).build();
+        return AuthResponse.builder().token(jwtToken).message("Usuario registrado exitosamente").build();
     }
 
     public AuthResponse authenticate(String email, String password){
@@ -42,6 +42,6 @@ public class AuthService {
         );
         var user = userRepository.findByEmail(email).orElseThrow();
         var jwtToken = jWTutil.generateToken(user);
-        return AuthResponse.builder().token(jwtToken).message("El token se creó correctamente.").build();
+        return AuthResponse.builder().token(jwtToken).message("Usuario auktenticado exitosamente").build();
     }
 }

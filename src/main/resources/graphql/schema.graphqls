@@ -16,6 +16,7 @@ type Role{
 type AuthResponse {
     token: String
     message: String
+
 }
 
 type Query{
